@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -149,15 +151,50 @@ public class Utilidades {
 		return ret;
 	}
 
+	/**
+	 * Función que quita los espacios en blanco del comienzo y del final de una
+	 * cadena de caracteres que se pasa como parámetro y, además, sustituye todas
+	 * las vocales que tengan tilde por la correspondiente sin tilde, devolviendo la cadena resultante
+	 * 
+	 * @param s cadena original
+	 * @return cadena original sin espacios en blanco al comienzo y final de la cadena y sin vocales con tildes
+	 */
 	public static String quitarEspaciosTildes(String s) {
 		String ret = s.trim();
 		return ret.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
 				.replace('Á', 'A').replace('É', 'E').replace('Í', 'I').replace('Ó', 'O').replace('Ú', 'U');
 	}
 
-
 	public static String removeDiacriticalMarks(String string) {
 		// Form.NFC acepta ñ y distingue las tildes en español
 		return Normalizer.normalize(string, Form.NFC).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+	}
+
+	/**
+	 * Valida que una cadena de caracteres contiene dígitos únicamente
+	 * 
+	 * @param tfn cadena con el telefono a validar
+	 * @return true si es un telefono válido o false en caso contrario
+	 */
+	public static boolean validarTelefono(String tfn) {
+		return tfn.trim().chars().allMatch(Character::isDigit);
+	}
+
+	/**
+	 * Valida que una cadena de caracteres contiene letras o espacios únicamente,
+	 * longitud entre 3 y 50 caractreres
+	 * 
+	 * @param nombre cadena con el nombre a validar
+	 * @return true si es un nombre válido o false en caso contrario
+	 */
+	public static boolean validarNombre(String nombre) {
+		// regEx general para cadena de caracteres con longitud entre 1 y 50 caracteres,
+		// aceptando dígitos, letras MAYUS y minúsculas, con tildes, diréresis y
+		// diferentes símbolos especiales
+		// Pattern patron = Pattern.compile("[
+		// 0-9A-Za-zñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ¡!¿?@#$%()=+-€/.,]{1,50}");
+		Pattern patron = Pattern.compile("[ A-Za-zñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ-]{3,50}");
+		Matcher comprobacion = patron.matcher(nombre);
+		return comprobacion.matches();//
 	}
 }

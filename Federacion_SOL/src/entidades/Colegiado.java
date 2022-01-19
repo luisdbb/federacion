@@ -6,8 +6,7 @@ import utils.Datos;
 
 public class Colegiado {
 	private long id;
-	private Categoria categoria;
-
+	private Categoria categoria; //Examen 3 Ejercicio 3
 	private DatosPersona persona;
 
 	public Colegiado(long id, Categoria categoria) {
@@ -44,6 +43,7 @@ public class Colegiado {
 		return this.persona.toString();
 	}
 
+	//Examen 3 Ejercicio 3
 	public static Colegiado nuevoColegiado() {
 		Colegiado ret = null;
 		long id = -1;
