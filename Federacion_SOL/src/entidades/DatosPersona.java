@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import utils.Utilidades;
+import validaciones.Validaciones;
 
 public class DatosPersona {
 	private long id;
@@ -77,6 +78,7 @@ public class DatosPersona {
 				+ fechaNac.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ")";
 	}
 
+	//Examen 5 Ejercicio 3
 	public static DatosPersona nuevaPersona() {
 		DatosPersona ret = null;
 		Scanner in;
@@ -96,27 +98,33 @@ public class DatosPersona {
 			System.out.println("Introduzca el nombre de la nueva persona:");
 			in = new Scanner(System.in);
 			nombre = in.nextLine();
-			if (nombre.length() > 3)
-				valido = true;
+			valido = Validaciones.validarNombre(nombre);
+			if(!valido)
+				System.out.println("ERROR: El valor introducido para el nombre no es válido. ");
 		} while (!valido);
 		do {
-			System.out.println("Introduzca el telefono de la nueva persona:");
+			System.out.println("Introduzca el teléfono de la nueva persona:");
 			in = new Scanner(System.in);
 			tfn = in.nextLine();
-			if (tfn.length() > 3)
-				valido = true;
+			valido = Validaciones.validarTelefono(tfn);
+			if(!valido)
+				System.out.println("ERROR: El valor introducido para el teléfono no es válido. ");
 		} while (!valido);
 		System.out.println("Introduzca la fecha de nacimiento de la nueva persona");
 		LocalDate fecha = Utilidades.leerFecha();
 		System.out.println("¿Va a introducir un NIF? (pulse 'S' par SÍ o 'N' para NIE)");
 		boolean esnif = Utilidades.leerBoolean();
 		Documentacion doc;
-		if (esnif)
-			doc = NIF.nuevoNIF();
-
-		else
-			doc = NIE.nuevoNIE();
-
+		valido = false;
+		do {
+			if (esnif)
+				doc = NIF.nuevoNIF();
+			else
+				doc = NIE.nuevoNIE();
+			valido = doc.validar();
+			if(!valido)
+				System.out.println("ERROR: El documento introducido no es válido.");
+		} while (!valido);
 		ret = new DatosPersona(id, nombre, tfn, fecha, doc);
 		return ret;
 	}

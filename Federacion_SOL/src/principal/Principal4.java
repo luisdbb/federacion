@@ -1,19 +1,21 @@
 package principal;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import entidades.*;
 import utils.*;
+import validaciones.Validaciones;
 
 public class Principal4 {
 
 	public static void main(String[] args) {
 		Datos.cerrarResultados();
 		System.out.println("INICIO");
-		
+
 		Scanner in;
 		int elecc = -1;
-		Rol rol; //Examen 4 Ejercicio 3A
+		Rol rol; // Examen 4 Ejercicio 3A
 		boolean correcto = false;
 		while (true) {
 			System.out.println("Bienvenido al programa de gestión de la FEDERACIÓN DEPORTIVA:");
@@ -40,7 +42,7 @@ public class Principal4 {
 			} while (!correcto);
 			rol = Rol.values()[elecc - 1];
 
-			Credenciales cred; //Examen 4 Ejericicio 3B
+			Credenciales cred; // Examen 4 Ejericicio 3B
 			boolean login = false;
 			switch (rol.ordinal()) {
 			case 0: // Rol.DIRECTIVA;
@@ -70,7 +72,7 @@ public class Principal4 {
 			mostrarMenu(rol);
 		}
 
-	} //Final del main
+	} // Final del main
 
 	// Examen 3 Ejercicio 2 - Examen 4 Ejercicio 3C
 	private static void mostrarMenu(Rol rol) {
@@ -175,13 +177,13 @@ public class Principal4 {
 		System.out.println("SUBMenús de la DIRECTIVA.");
 		switch (elecc) {
 		case 1:
-			System.out.println("Ha seleccionado GESTIÓN de MEDALLAS.");
+			System.out.println("Ha seleccionado 1.1 GESTIÓN de MEDALLAS.");
 			do {
 				mostrarMenuGestionMedallas();
 				System.out.println("Seleccione una de las opciones anteriores.");
 				in = new Scanner(System.in);
 				subelecc = in.nextInt();
-				if (subelecc >= 0 && subelecc <= 1) {
+				if (subelecc >= 0 && subelecc <= 2) {
 					valido = true;
 					mostrarSubmenuGestionMedallas(subelecc);
 				} else
@@ -190,7 +192,7 @@ public class Principal4 {
 			System.out.println("Ha elegido VOLVER.");
 			break;
 		case 2:
-			System.out.println("Ha seleccionado GESTIÓN de COMPETICIONES y de PRUEBAS.");
+			System.out.println("Ha seleccionado 1.2 GESTIÓN de COMPETICIONES y de PRUEBAS.");
 			break;
 		default:
 		}
@@ -201,7 +203,7 @@ public class Principal4 {
 	private static void mostrarMenuGestionMedallas() {
 		System.out.println("Menú de GESTIÓN de MEDALLAS.");
 		System.out.println("Seleccione una de las siguientes opciones:");
-		System.out.println("1. Nueva Medalla\n" + "0. Volver");
+		System.out.println("1. Nueva Medalla\n" + "2. Ver Medallas\n" + "0. Volver");
 	}
 
 	private static void mostrarSubmenuGestionMedallas(int elecc) {
@@ -210,9 +212,9 @@ public class Principal4 {
 		boolean valido = false;
 		System.out.println("\nGESTIÓN de MEDALLAS.");
 		switch (elecc) {
-		case 1: //opción 1.1.1
+		case 1: // opción 1.1.1
+			System.out.println("Ha seleccionado 1.1.1 Nueva MEDALLA.");
 			do {
-				System.out.println("Ha seleccionado Nueva MEDALLA.");
 				System.out.println("Seleccione 1 para ORO, 2 para PLATA o 3 para BRONCE.");
 				subelecc = in.nextInt();
 				if (subelecc != 1 && subelecc != 2 && subelecc != 3)
@@ -234,9 +236,213 @@ public class Principal4 {
 			System.out.println("Se ha introducido una nueva medalla correctamente.");
 			System.out.println(nuevo);
 			break;
-//		case 2:  //opción 1.1.2
-//			System.out.println("Ha seleccionado ");
-//			break;
+		// Examen 5 Ejercicio 6
+		case 2: // opción 1.1.2
+			System.out.println("Ha seleccionado 1.1.2 Ver Medallas");
+			boolean validar = false;
+			boolean orosSi = false;
+			boolean platasSi = false;
+			boolean broncesSi = false;
+			// Se pregunta al usuario por sus criterios de búsqueda
+			do {
+				System.out.println("Seleccione qué tipo de medallas filtrar:");
+				System.out.println("¿Desea buscar Oros?");
+				in = new Scanner(System.in);
+				orosSi = Utilidades.leerBoolean();
+				System.out.println("¿Desea buscar Platas?");
+				in = new Scanner(System.in);
+				platasSi = Utilidades.leerBoolean();
+				System.out.println("¿Desea buscar Bronces?");
+				in = new Scanner(System.in);
+				broncesSi = Utilidades.leerBoolean();
+				validar = orosSi || platasSi || broncesSi;
+				if (!validar) {
+					System.out.println("ERROR: Debe seleccionar al menos algún tipo de medallas.");
+					continue;
+				}
+				System.out.print("Ha seleccionado buscar sobre " + (orosSi ? "oros " : " ")
+						+ (platasSi ? "platas " : " ") + (broncesSi ? "bronces" : " "));
+				System.out.println("\n¿Es correcto?");
+				in = new Scanner(System.in);
+				validar = Utilidades.leerBoolean();
+			} while (!validar);
+
+			System.out.println("¿Desea buscar por un rango de pureza?");
+			boolean purezaSi = Utilidades.leerBoolean();
+			float purezaMin = 0.0F;
+			float purezaMax = 0.0F;
+			if (purezaSi) {
+				boolean purezaVal = false;
+				do {
+					System.out.println("Introduzca el valor para la pureza mínima:");
+					purezaMin = Utilidades.leerFloat();
+					purezaVal = Validaciones.validarPureza(purezaMin);
+					if (!purezaVal)
+						System.out.println("ERROR: Valor introducido para la pureza mínima no válido.");
+				} while (!purezaVal);
+				purezaVal = false;
+				do {
+					System.out.println("Introduzca el valor para la pureza máxima:");
+					purezaMax = Utilidades.leerFloat();
+					purezaVal = Validaciones.validarPureza(purezaMax);
+					if (!purezaVal)
+						System.out.println("ERROR: Valor introducido para la pureza máxima no válido.");
+					else if (purezaMax < purezaMin) {
+						System.out.println("ERROR: La pureza máxima debe ser mayor que la mínima.");
+						purezaVal = false;
+					}
+				} while (!purezaVal);
+			}
+
+			System.out.println("¿Desea buscar por un rango de fechas?");
+			boolean fechasSi = Utilidades.leerBoolean();
+			LocalDate fechaMin = null;
+			LocalDate fechaMax = null;
+			if (fechasSi) {
+				boolean fechaVal = false;
+				do {
+					System.out.println("Introduzca el valor para la fecha mínima:");
+					fechaMin = Utilidades.leerFecha();
+					fechaVal = Validaciones.validarFecha(fechaMin);
+					if (!fechaVal)
+						System.out.println("ERROR: Valor introducido para la fecha mínima no válido.");
+				} while (!fechaVal);
+				fechaVal = false;
+				do {
+					System.out.println("Introduzca el valor para la fecha máxima:");
+					fechaMax = Utilidades.leerFecha();
+					fechaVal = Validaciones.validarFecha(fechaMax);
+					if (!fechaVal)
+						System.out.println("ERROR: Valor introducido para la fecha máxima no válido.");
+					else if (fechaMax.isBefore(fechaMin)) {
+						System.out.println("ERROR: La fecha máxima debe ser posterior a la mínima.");
+						fechaVal = false;
+					}
+				} while (!fechaVal);
+			}
+
+			System.out.println("¿Desea buscar solo entre medallas ya asignadas?");
+			boolean asignadasOnly = Utilidades.leerBoolean();
+
+			// Se prepara un array medallasFiltradas que se inicializa con todas las
+			// medallas del sistema (primero Oros, luego Platas y por último Bronces
+			int totalMedallas = Datos.OROS.length + Datos.PLATAS.length + Datos.BRONCES.length;
+			Metal[] medallasFiltradas = new Metal[totalMedallas];
+			for (int i = 0; i < totalMedallas;) {
+				for (int j = 0; j < Datos.OROS.length; j++, i++)
+					medallasFiltradas[i] = Datos.OROS[j];
+				for (int j = 0; j < Datos.PLATAS.length; j++, i++)
+					medallasFiltradas[i] = Datos.PLATAS[j];
+				for (int j = 0; j < Datos.BRONCES.length; j++, i++)
+					medallasFiltradas[i] = Datos.BRONCES[j];
+			}
+			// se filtra cada elemento de medallasFiltradas en función de los criterios de
+			// búsqueda seleccionados
+			int index = 0;
+			if (orosSi) {
+				for (int i = 0; i < Datos.OROS.length; i++, index++) {
+					if (purezaSi) {
+						float purezaElem = ((Oro) medallasFiltradas[index]).getPureza();
+						if (purezaElem < purezaMin || purezaElem > purezaMax) {
+							medallasFiltradas[index] = null;
+							continue;
+						}
+					}
+					if (fechasSi) {
+						LocalDate fechaElem = medallasFiltradas[index].getFecha();
+						if (fechaElem != null)
+							if (fechaElem.isBefore(fechaMin) || fechaElem.isAfter(fechaMax)) {
+								medallasFiltradas[index] = null;
+								continue;
+							}
+					}
+					if (asignadasOnly) {
+						if (!medallasFiltradas[index].isAsignada()) {
+							medallasFiltradas[index] = null;
+							continue;
+						}
+					}
+				}
+			} else {
+				for (int i = index; i < Datos.OROS.length; i++, index++) {
+					medallasFiltradas[index] = null;
+				}
+			}
+			if (platasSi) {
+				for (int i = 0; i < Datos.PLATAS.length; i++, index++) {
+					if (purezaSi) {
+						float purezaElem = ((Plata) medallasFiltradas[index]).getPureza();
+						if (purezaElem < purezaMin || purezaElem > purezaMax) {
+							medallasFiltradas[index] = null;
+							continue;
+						}
+					}
+					if (fechasSi) {
+						LocalDate fechaElem = medallasFiltradas[index].getFecha();
+						if (fechaElem != null)
+							if (fechaElem.isBefore(fechaMin) || fechaElem.isAfter(fechaMax)) {
+								medallasFiltradas[index] = null;
+								continue;
+							}
+					}
+					if (asignadasOnly) {
+						if (!medallasFiltradas[index].isAsignada()) {
+							medallasFiltradas[index] = null;
+							continue;
+						}
+					}
+				}
+			} else {
+				for (int i = 0; i < Datos.PLATAS.length; i++, index++) {
+					medallasFiltradas[index] = null;
+				}
+			}
+
+			if (broncesSi) {
+				for (int i = 0; i < Datos.BRONCES.length; i++, index++) {
+					if (purezaSi) {
+						float purezaElem = ((Bronce) medallasFiltradas[index]).getPureza();
+						if (purezaElem < purezaMin || purezaElem > purezaMax) {
+							medallasFiltradas[index] = null;
+							continue;
+						}
+					}
+					if (fechasSi) {
+						LocalDate fechaElem = medallasFiltradas[index].getFecha();
+						if (fechaElem != null)
+							if (fechaElem.isBefore(fechaMin) || fechaElem.isAfter(fechaMax)) {
+								medallasFiltradas[index] = null;
+								continue;
+							}
+					}
+					if (asignadasOnly) {
+						if (!medallasFiltradas[index].isAsignada()) {
+							medallasFiltradas[index] = null;
+							continue;
+						}
+					}
+				}
+			} else {
+				for (int i = 0; i < Datos.BRONCES.length; i++, index++) {
+					medallasFiltradas[index] = null;
+				}
+			}
+
+			// mostrar las medallas que cumplen los criterios de búsqueda
+			int numMedallasFiltradas = 0;
+			for (int i = 0; i < medallasFiltradas.length; i++)
+				if (medallasFiltradas[i] != null)
+					numMedallasFiltradas++;
+			System.out.println("Hay " + numMedallasFiltradas + " medallas que cumplen sun criterios de búsqueda.");
+			if (numMedallasFiltradas > 0) {
+				System.out.println("Las siguientes medallas cumplen sus criterios de búsqueda:");
+				for (int i = 0; i < medallasFiltradas.length; i++)
+					if (medallasFiltradas[i] != null)
+						System.out.println("medalla: " + medallasFiltradas[i].toString());
+			} else
+				System.out.println("No hay medallas que cumplan sus criterios de búsqueda.");
+
+			break;
 		default:
 		}
 		System.out.println("Volviendo al menú principal de gestión de medallas...");
@@ -248,11 +454,11 @@ public class Principal4 {
 		int subelecc = -1;
 		boolean valido = false;
 		switch (elecc) {
-		case 1:  //opción 2.1
-			System.out.println("Ha seleccionado CONFORMAR EQUIPO.");
+		case 1: // opción 2.1
+			System.out.println("Ha seleccionado 2.1 CONFORMAR EQUIPO.");
 			break;
-		case 2: //opción 2.2
-			System.out.println("Ha seleccionado INSCRIPCIÓN de EQUIPO en PRUEBA.");
+		case 2: // opción 2.2
+			System.out.println("Ha seleccionado 2.2 INSCRIPCIÓN de EQUIPO en PRUEBA.");
 			break;
 		default:
 		}
@@ -264,11 +470,13 @@ public class Principal4 {
 		int subelecc = -1;
 		boolean valido = false;
 		switch (elecc) {
-		case 1: ////opción 3.1
-			System.out.println("Ha seleccionado FEDERARSE (Nuevo ATLETA).");
+		case 1: //// opción 3.1
+			System.out.println("Ha seleccionado 3.1 FEDERARSE (Nuevo ATLETA).");
+			Atleta nuevo = Atleta.nuevoAtleta();
+			System.out.println("El nuevo atleta introducido es: " + nuevo);
 			break;
-		case 2: //opción 3.2
-			System.out.println("Ha seleccionado INSCRIPCIÓN de ATLETA en PRUEBA..");
+		case 2: // opción 3.2
+			System.out.println("Ha seleccionado 3.2 INSCRIPCIÓN de ATLETA en PRUEBA..");
 			break;
 		default:
 		}
@@ -280,13 +488,13 @@ public class Principal4 {
 		int subelecc = -1;
 		boolean valido = false;
 		switch (elecc) {
-		case 1: ////opción 4.1
-			System.out.println("Ha seleccionado Nuevo COLEGIADO.");
+		case 1: //// opción 4.1
+			System.out.println("Ha seleccionado 4.1 Nuevo COLEGIADO.");
 			Colegiado nuevo = Colegiado.nuevoColegiado();
 			System.out.println("Se ha creado correctamente el nuevo colegiado:" + nuevo);
 			break;
-		case 2: ////opción 4.2
-			System.out.println("Ha seleccionado INTRODUCIR RESULTADOS de PRUEBA..");
+		case 2: //// opción 4.2
+			System.out.println("Ha seleccionado 4.2 INTRODUCIR RESULTADOS de PRUEBA..");
 			break;
 		default:
 		}
@@ -326,44 +534,33 @@ public class Principal4 {
 	private static void mostrarMenuDirectiva() {
 		System.out.println("Menú de la DIRECTIVA.");
 		System.out.println("Seleccione una de las siguientes opciones:");
-		System.out.println("1. Gestión de medallas\n" 
-				+ "2. Gestión de competiciones y pruebas.\n"
-				+ "0. Volver");
+		System.out.println("1.1 Gestión de medallas\n" + "1.2 Gestión de competiciones y pruebas.\n" + "0. Volver");
 	}
 
 	private static void mostrarMenuManager() {
 		System.out.println("Menú para los MÁNAGERS.");
 		System.out.println("Seleccione una de las siguientes opciones:");
-		System.out.println("1. Conformar equipo\n" 
-				+ "2. Inscripcion de equipo en prueba.\n" 
-				+ "0. Volver");
+		System.out.println("2.1 Conformar equipo\n" + "2.2 Inscripción de equipo en prueba.\n" + "0. Volver");
 	}
 
 	private static void mostrarMenuAtleta() {
 		System.out.println("Menú para los ATLETAS.");
 		System.out.println("Seleccione una de las siguientes opciones:");
-		System.out.println("1. Federarse (nuevo Atleta)\n" 
-				+ "2. Inscrcipcion de atleta en prueba.\n" 
-				+ "0. Volver");
+		System.out.println("3.1 Federarse (nuevo Atleta)\n" + "3.2 Inscripción de atleta en prueba.\n" + "0. Volver");
 
 	}
 
 	private static void mostrarMenuColegiado() {
 		System.out.println("Menú para los COLEGIADOS.");
 		System.out.println("Seleccione una de las siguientes opciones:");
-		System.out.println("1. Nuevo Colegiado\n" 
-				+ "2. Introducir resultados de prueba.\n" 
-				+ "0. Volver");
+		System.out.println("4.1 Nuevo Colegiado\n" + "4.2 Introducir resultados de prueba.\n" + "0. Volver");
 	}
 
 	private static void mostrarMenuAdmin() {
 		System.out.println("Menú para los ADMINISTRADORES.");
 		System.out.println("Seleccione una de las siguientes opciones:");
-		System.out.println("1. Gestión de medallas, de competiciones y de pruebas\n" 
-				+ "2. Gestión de equipos.\n"
-				+ "3. Gestión de atletas.\n" 
-				+ "4. Gestión de arbitrajes y resultados.\n" 
-				+ "0. Volver");
+		System.out.println("1. Gestión de medallas, de competiciones y de pruebas\n" + "2. Gestión de equipos.\n"
+				+ "3. Gestión de atletas.\n" + "4. Gestión de arbitrajes y resultados.\n" + "0. Volver");
 	}
 
 	private static void mostrarMenuInvitado() {
