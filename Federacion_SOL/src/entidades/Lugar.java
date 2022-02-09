@@ -1,6 +1,6 @@
 package entidades;
 
-//Ejercicio 1
+//Examen 1 Ejercicio 1
 public enum Lugar {
 	GIJONMESTAS("Las Mestas", "Gijon", true),
 	GIJONCENTRO("Centro ciudad", "Gijon", true),

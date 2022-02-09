@@ -106,6 +106,7 @@ public class Utilidades extends Validaciones {
 		return ret;
 	}
 
+	//Examen 3 Ejercicio 1
 	/**
 	 * Función que pide al usuario que introduce un valor para una fecha a partir de
 	 * 3 enteros para el día, mes y año respectivamente Y una hora a partir de ptrps
@@ -153,6 +154,7 @@ public class Utilidades extends Validaciones {
 		return ret;
 	}
 
+	//Examen 4 Ejercicio 1
 	/**
 	 * Función que quita los espacios en blanco del comienzo y del final de una
 	 * cadena de caracteres que se pasa como parámetro y, además, sustituye todas

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import utils.Utilidades;
+import validaciones.Validaciones;
 
 public class Oro extends Metal {
 	private long id;
@@ -21,7 +22,7 @@ public class Oro extends Metal {
 			idMaxPureza = id;
 		}
 	}
-	
+
 	public Oro(long id, float pureza, LocalDate fecha) {
 		super();
 		this.id = id;
@@ -51,10 +52,10 @@ public class Oro extends Metal {
 
 	@Override
 	public String toString() {
-		return "O" + id + "(" + pureza + "%) de fecha:"+ this.getFecha()+" ¿asignado?="+this.isAsignada();
+		return "O" + id + "(" + pureza + "%) de fecha:" + this.getFecha() + " ¿asignado?=" + this.isAsignada();
 	}
 
-	// Ejercicio 5, parte B
+	//Examen 1 Ejercicio 5, parte B
 	@Override
 	public float maximaPurezaAlcanzada() {
 		return Oro.maxPureza;
@@ -75,19 +76,32 @@ public class Oro extends Metal {
 	public static void setIdMaxPureza(long idMaxPureza) {
 		Oro.idMaxPureza = idMaxPureza;
 	}
-	
+
 	public static Oro nuevoOro() {
 		Oro ret = null;
 		Scanner in = new Scanner(System.in);
 		int id = 0;
+		float pureza = 0.0F;
+		boolean valido = false;
 		do {
 			System.out.println("Introduzca el id:");
 			id = in.nextInt();
-			if(id <= 0) 
+			valido = Validaciones.validarId(id);
+			if (!valido)
 				System.out.println("Valor incorrecto para el identificador.");
-		}while(id <= 0);
-		System.out.println("Introduzca la pureza:");
-		float pureza = Float.parseFloat(String.valueOf(Utilidades.leerDouble()));
+			else
+				valido = true;
+		} while (!valido);
+		valido = false;
+		do {
+			System.out.println("Introduzca la pureza (%):");
+			pureza = Utilidades.leerFloat();
+			valido = Validaciones.validarPureza(pureza);
+			if (!valido)
+				System.out.println("Valor incorrecto para la pureza (%).");
+			else
+				valido = true;
+		} while (!valido);
 		System.out.println("Introduzca la fecha:");
 		LocalDate fecha = Utilidades.leerFecha();
 		ret = new Oro(id, pureza, fecha);

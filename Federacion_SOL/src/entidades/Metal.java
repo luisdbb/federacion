@@ -2,7 +2,7 @@ package entidades;
 
 import java.time.LocalDate;
 
-//Ejercicio 5, parte A
+//Examen 1 Ejercicio 5, parte A
 public abstract class Metal {
 	public abstract float maximaPurezaAlcanzada();
 	public abstract float[] cotasPurezaEfectiva();

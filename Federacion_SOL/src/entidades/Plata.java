@@ -4,12 +4,13 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import utils.Utilidades;
+import validaciones.Validaciones;
 
 public class Plata extends Metal{
 	private long id;
 	private float pureza; //% pureza
 	
-	//Ejercicio 5, parte B
+	//Examen 1 Ejercicio 5, parte B
 	static private float maxPureza;
 	static private long idmaxpureza; 
 	
@@ -55,7 +56,7 @@ public class Plata extends Metal{
 		return "P" + id + "(" + pureza + "%) de fecha:"+ this.getFecha()+" ¿asignado?="+this.isAsignada();
 	}
 
-	//Ejercicio 5, parte B
+	//Examen 1 Ejercicio 5, parte B
 	@Override
 	public float maximaPurezaAlcanzada() {
 		return Plata.maxPureza;
@@ -77,14 +78,27 @@ public class Plata extends Metal{
 		Plata ret = null;
 		Scanner in = new Scanner(System.in);
 		int id = 0;
+		float pureza = 0.0F;
+		boolean valido = false;
 		do {
 			System.out.println("Introduzca el id:");
 			id = in.nextInt();
-			if(id <= 0) 
+			valido = Validaciones.validarId(id);
+			if (!valido)
 				System.out.println("Valor incorrecto para el identificador.");
-		}while(id <= 0);
-		System.out.println("Introduzca la pureza:");
-		float pureza = Float.parseFloat(String.valueOf(Utilidades.leerDouble()));
+			else
+				valido = true;
+		} while (!valido);
+		valido = false;
+		do {
+			System.out.println("Introduzca la pureza (%):");
+			pureza = Utilidades.leerFloat();
+			valido = Validaciones.validarPureza(pureza);
+			if (!valido)
+				System.out.println("Valor incorrecto para la pureza (%).");
+			else
+				valido = true;
+		} while (!valido);
 		System.out.println("Introduzca la fecha:");
 		LocalDate fecha = Utilidades.leerFecha();
 		ret = new Plata(id, pureza, fecha);

@@ -1,5 +1,6 @@
 package entidades;
 
+//Examen 2 Ejercicio 1
 public enum Categoria {
 	JUNIOR("Junior", 'J'), SENIOR("Senior", 'S'), ESPECIAL("Especial", 'E');
 

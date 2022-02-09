@@ -3,6 +3,7 @@ package entidades;
 import java.util.Scanner;
 
 import utils.Datos;
+import validaciones.Validaciones;
 
 public class Colegiado {
 	private long id;
@@ -56,10 +57,11 @@ public class Colegiado {
 			System.out.println("Introduzca el id del nuevo colegiado:");
 			in = new Scanner(System.in);
 			id = in.nextInt();
-			if (id > 0)
-				valido = true;
+			valido = Validaciones.validarId(id);
+			if (!valido)
+				System.out.println("ERROR: Valor incorrecto para el identificador.");
 			else
-				System.out.println("Valor incorrecto para el identificador.");
+				valido = true;
 		} while (!valido);
 
 		valido = false;

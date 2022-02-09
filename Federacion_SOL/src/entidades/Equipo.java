@@ -51,7 +51,7 @@ public class Equipo extends Participante {
 		this.atletas = atletas;
 	}
 
-	//Ejercicio 3
+	//Examen 1 Ejercicio 3
 	@Override
 	public String toString() {
 		String ret = "";

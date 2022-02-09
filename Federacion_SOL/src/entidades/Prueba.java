@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import utils.Utilidades;
+import validaciones.Validaciones;
 
 public class Prueba {
 	private long id;
@@ -207,7 +208,7 @@ public class Prueba {
 				+ ", participantes=" + Arrays.toString(participantes) + "]";
 	}
 
-	// Ejercicio 2, parte B
+	//Examen 1 Ejercicio 2, parte B
 	public static Prueba nuevaPrueba() {
 		Prueba ret = null;
 		Scanner in;
@@ -219,7 +220,10 @@ public class Prueba {
 			System.out.println("Introduzca el id de la nueva prueba:");
 			in = new Scanner(System.in);
 			id = in.nextInt();
-			if (id > 0)
+			valido = Validaciones.validarId(id);
+			if(!valido)
+				System.out.println("ERROR: Valor introducido para el identificador de la prueba inválido.");
+			else
 				valido = true;
 		} while (!valido);
 		valido = false;
@@ -227,7 +231,10 @@ public class Prueba {
 			System.out.println("Introduzca el nombre de la nueva prueba:");
 			in = new Scanner(System.in);
 			nombre = in.nextLine();
-			if (nombre.length() > 3)
+			valido = Validaciones.validarNombre(nombre);
+			if(!valido)
+				System.out.println("ERROR: Valor introducido para el nombre de la prueba inválido.");
+			else
 				valido = true;
 		} while (!valido);
 

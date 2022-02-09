@@ -1,5 +1,6 @@
 package entidades;
 
+//Examen 4 Ejercicio 2
 public enum Rol {
 	DIRECTIVA("Directiva de la Federación"), 
 	MANAGER("Mánager"), 

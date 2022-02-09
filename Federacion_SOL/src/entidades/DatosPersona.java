@@ -13,7 +13,7 @@ public class DatosPersona {
 	private String telefono;
 	private LocalDate fechaNac;
 
-	private Documentacion nifnie;
+	private Documentacion nifnie; //Examen 2 Ejercicio 3.2
 
 	public DatosPersona(long id, String nombre, String telefono, LocalDate fechaNac) {
 		super();
@@ -22,7 +22,8 @@ public class DatosPersona {
 		this.telefono = telefono;
 		this.fechaNac = fechaNac;
 	}
-
+	
+	//Examen 2 Ejercicio 3.2
 	public DatosPersona(long id, String nombre, String telefono, LocalDate fechaNac, Documentacion nifnie) {
 		super();
 		this.id = id;
@@ -78,7 +79,8 @@ public class DatosPersona {
 				+ fechaNac.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ")";
 	}
 
-	//Examen 5 Ejercicio 3
+	// Examen 2 Ejercicio 3.3
+	// Examen 5 Ejercicio 3
 	public static DatosPersona nuevaPersona() {
 		DatosPersona ret = null;
 		Scanner in;
@@ -90,7 +92,10 @@ public class DatosPersona {
 			System.out.println("Introduzca el id de la nueva persona:");
 			in = new Scanner(System.in);
 			id = in.nextInt();
-			if (id > 0)
+			valido = Validaciones.validarId(id);
+			if (!valido)
+				System.out.println("ERROR: Valor incorrecto para el identificador.");
+			else
 				valido = true;
 		} while (!valido);
 		valido = false;
@@ -99,7 +104,7 @@ public class DatosPersona {
 			in = new Scanner(System.in);
 			nombre = in.nextLine();
 			valido = Validaciones.validarNombre(nombre);
-			if(!valido)
+			if (!valido)
 				System.out.println("ERROR: El valor introducido para el nombre no es válido. ");
 		} while (!valido);
 		do {
@@ -107,7 +112,7 @@ public class DatosPersona {
 			in = new Scanner(System.in);
 			tfn = in.nextLine();
 			valido = Validaciones.validarTelefono(tfn);
-			if(!valido)
+			if (!valido)
 				System.out.println("ERROR: El valor introducido para el teléfono no es válido. ");
 		} while (!valido);
 		System.out.println("Introduzca la fecha de nacimiento de la nueva persona");
@@ -122,7 +127,7 @@ public class DatosPersona {
 			else
 				doc = NIE.nuevoNIE();
 			valido = doc.validar();
-			if(!valido)
+			if (!valido)
 				System.out.println("ERROR: El documento introducido no es válido.");
 		} while (!valido);
 		ret = new DatosPersona(id, nombre, tfn, fecha, doc);

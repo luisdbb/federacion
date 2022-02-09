@@ -1,10 +1,9 @@
 package entidades;
 
 import java.util.Scanner;
-import com.aeat.valida.*;
-
 import validaciones.Validaciones;
 
+//Examen 2 Ejercicio 3.1
 public class NIF extends Documentacion {
 	String numero;
 	char letraFinal;

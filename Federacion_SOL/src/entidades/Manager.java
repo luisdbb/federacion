@@ -1,7 +1,6 @@
 package entidades;
 
 import java.util.Scanner;
-
 import utils.Datos;
 import validaciones.Validaciones;
 

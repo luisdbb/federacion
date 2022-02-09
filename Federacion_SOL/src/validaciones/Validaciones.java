@@ -125,7 +125,7 @@ public class Validaciones {
 	}
 
 	/**
-	 * Función que valida un objeto NIe
+	 * Función que valida un objeto NIE
 	 * 
 	 * @param nie objeto NIE que se va a validar
 	 * @return true si el NIE pasado como parámetro es válido o false en caso
@@ -136,17 +136,23 @@ public class Validaciones {
 	}
 
 	public static boolean validarAltura(float altura) {
-		return (altura <= 0.0F);
+		return (altura > 0.0F);
 	}
-	
+
 	public static boolean validarPeso(float peso) {
-		return (peso <= 0.0F);
+		return (peso > 0.0F);
 	}
 
 	public static boolean validarDireccion(String direccion) {
 		return (direccion.length() > 3);
 	}
 
+	/**
+	 * Función que valida un valor flotante para la pureza (en %)
+	 * 
+	 * @param pureza valor flotante de la pureza para validar
+	 * @return true si es valor válido (entre 0,0 y 100,0) o false en caso contrario
+	 */
 	public static boolean validarPureza(float pureza) {
 		return (pureza >= 0.0F && pureza <= 100.0F);
 	}
@@ -154,5 +160,13 @@ public class Validaciones {
 	public static boolean validarFecha(LocalDate fechaMin) {
 		// TODO Esbozo de método generado automáticamente
 		return true;
+	}
+
+	public static boolean validarId(long id) {
+		return (id > 0);
+	}
+
+	public static boolean validarAnio(int anio) {
+		return (anio > 0);
 	}
 }
