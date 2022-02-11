@@ -1,6 +1,14 @@
 package principal;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import entidades.*;
@@ -569,9 +577,80 @@ public class Principal4 {
 		System.out.println("" + "0. Volver");
 	}
 
+	/// Examen 6 Ejercicio 1
+	/**
+	 * Función para el login de un usuario mediante sus credenciales de acceso
+	 * 
+	 * @param cred credenciales de acceso (2 cadenas de caracteres para usuario y
+	 *             passsword)
+	 * @return true si las credenciales coinciden con alguna de las contenidas en el
+	 *         fichero de caracteres credenciales.txt o false en caso contrario
+	 */
 	private static boolean login(Credenciales cred) {
-		// Por el momento siempre devolverá true
-		return true;
+		boolean ret = false;
+		File fichero = new File("credenciales.txt");
+		FileReader lector = null;
+		BufferedReader buffer = null;
+		try {
+			try {
+				lector = new FileReader(fichero);
+				buffer = new BufferedReader(lector);
+				String linea;
+				while ((linea = buffer.readLine()) != null) {
+					String[] campos = linea.split("\\|");
+					String user = campos[0];
+					String pass = campos[1];
+					String rol = campos[2];
+					if (user.equals(cred.getUsuario()))
+						if (pass.equals(cred.getPassword()))
+							return true;
+				}
+			} finally {
+				if (buffer != null) {
+					buffer.close();
+				}
+				if (lector != null) {
+					lector.close();
+				}
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Se ha producido una FileNotFoundException" + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Se ha producido una IOException" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception" + e.getMessage());
+		}
+		return ret;
+	}
+
+	/// Examen 6 Ejercicio 2
+	/***
+	 * (Máx 2ptos.) Implementar una función para recorrer todos los elementos del
+	 * array ATLETAS de la clase Datos.java, y exportar a un fichero binario de
+	 * nombre juniors.dat sólo aquellos atletas considerados como Junior (es decir,
+	 * cuya fechaNac posterior al 01/01/2000).
+	 */
+	public static void exportarAtletasJunior() {
+		String path = "juniors.dat";
+		try {
+			FileOutputStream fichero = new FileOutputStream(path, false); // el 2º argumento a true para que concatene
+																			// al final del fichero, en lugar de
+																			// sobreescribir
+			ObjectOutputStream escritor = new ObjectOutputStream(fichero);
+			for (Atleta a : Datos.ATLETAS) {
+				if (a.getPersona().getFechaNac().isAfter(LocalDate.of(2000, 1, 1))) {
+					escritor.writeObject((Atleta) a);
+					escritor.flush();
+				}
+			}
+			escritor.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Se ha producido una FileNotFoundException" + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Se ha producido una IOException" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception" + e.getMessage());
+		}
 	}
 
 }
