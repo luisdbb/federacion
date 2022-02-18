@@ -104,4 +104,5 @@ public class Bronce extends Metal {
 		ret = new Bronce(id, pureza, fecha);
 		return ret;
 	}
+
 }

@@ -7,6 +7,7 @@ public class Equipo extends Participante {
 	private int anioinscripcion;
 	private Manager manager;
 	private Atleta[] atletas;
+	private String nombre;
 
 	public Equipo(long id, int anioinscripcion, Manager manager, Atleta[] atletas) {
 		super();
@@ -49,6 +50,16 @@ public class Equipo extends Participante {
 	}
 	public void setAtletas(Atleta[] atletas) {
 		this.atletas = atletas;
+	}
+	
+	
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	//Examen 1 Ejercicio 3

@@ -13,6 +13,7 @@ import entidades.DatosPersona;
 import entidades.Equipo;
 import entidades.Lugar;
 import entidades.Manager;
+import entidades.Metal;
 import entidades.Oro;
 import entidades.Participante;
 import entidades.Plata;
@@ -648,4 +649,5 @@ public class Datos {
 		}
 		return ret;
 	}
+
 }
