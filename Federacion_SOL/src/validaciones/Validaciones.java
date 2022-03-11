@@ -169,4 +169,8 @@ public class Validaciones {
 	public static boolean validarAnio(int anio) {
 		return (anio > 0);
 	}
+	
+	public static boolean validarNombreEquipo(String nombre) {
+		return false; //TO-DO
+	}
 }

@@ -1,5 +1,6 @@
 package entidades;
 
+///Examen 7 Ejercicio 4
 public class Palmares<T extends Metal, S extends Participante> {
 	private long id;
 	private T medalla;

@@ -333,21 +333,21 @@ public class Datos {
 
 
 	public static Equipo[] EQUIPOS = {
-			new Equipo(1, 2020, MANAGERS[0], equipo1),
-			new Equipo(2, 2020, MANAGERS[1], equipo2),
-			new Equipo(3, 2020, MANAGERS[2], equipo3),
-			new Equipo(4, 2020, MANAGERS[3], equipo4),
-			new Equipo(5, 2020, MANAGERS[4], equipo5),
-			new Equipo(6, 2020, MANAGERS[5], equipo6),
-			new Equipo(7, 2020, MANAGERS[6], equipo7),
-			new Equipo(8, 2020, MANAGERS[7], equipo8),
-			new Equipo(9, 2020, MANAGERS[8], equipo9),
-			new Equipo(10, 2020, MANAGERS[9], equipo10),
-			new Equipo(11, 2020, MANAGERS[10], equipo11),
-			new Equipo(12, 2020, MANAGERS[11], equipo12),
-			new Equipo(13, 2020, MANAGERS[12], equipo13),
-			new Equipo(14, 2020, MANAGERS[13], equipo14),
-			new Equipo(15, 2020, MANAGERS[14], equipo15)
+			new Equipo(1, "Equipo1",2020, MANAGERS[0], equipo1),
+			new Equipo(2, "Equipo2",2020, MANAGERS[1], equipo2),
+			new Equipo(3, "Equipo3",2020, MANAGERS[2], equipo3),
+			new Equipo(4, "Equipo4",2020, MANAGERS[3], equipo4),
+			new Equipo(5, "Equipo5",2020, MANAGERS[4], equipo5),
+			new Equipo(6, "Equipo6",2020, MANAGERS[5], equipo6),
+			new Equipo(7, "Equipo7",2020, MANAGERS[6], equipo7),
+			new Equipo(8, "Equipo8",2020, MANAGERS[7], equipo8),
+			new Equipo(9, "Equipo9",2020, MANAGERS[8], equipo9),
+			new Equipo(10, "Equipo10",2020, MANAGERS[9], equipo10),
+			new Equipo(11, "Equipo11",2020, MANAGERS[10], equipo11),
+			new Equipo(12, "Equipo12",2020, MANAGERS[11], equipo12),
+			new Equipo(13, "Equipo13",2020, MANAGERS[12], equipo13),
+			new Equipo(14, "Equipo14",2020, MANAGERS[13], equipo14),
+			new Equipo(15,"Equipo15", 2020, MANAGERS[14], equipo15)
 	};
 
 	private static Participante[] finalistasMascInd2020 = {
