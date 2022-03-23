@@ -65,10 +65,8 @@ public class NIE extends Documentacion {
 			System.out.println("Introduzca el NIE completo:");
 			in = new Scanner(System.in);
 			cadena = in.nextLine();
-			if (cadena.length() > 3)
-				valido = true;
+			valido = Validaciones.validarNIE(cadena);
 		} while (!valido);
-
 		ret = new NIE(cadena);
 		return ret;
 	}
