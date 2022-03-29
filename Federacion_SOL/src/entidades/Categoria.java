@@ -2,14 +2,20 @@ package entidades;
 
 //Examen 2 Ejercicio 1
 public enum Categoria {
-	JUNIOR("Junior", 'J'), SENIOR("Senior", 'S'), ESPECIAL("Especial", 'E');
+	JUNIOR(1, "Junior", 'J'), SENIOR(2, "Senior", 'S'), ESPECIAL(3, "Especial", 'E');
 
+	private int id;
 	String nombre;
 	char abreviatura;
 
-	Categoria(String nombre, char abre) {
+	Categoria(int id, String nombre, char abre) {
+		this.id = id;
 		this.nombre = nombre;
 		this.abreviatura = abre;
+	}
+
+	public int getId() {
+		return this.id;
 	}
 
 	public String getNombre() {

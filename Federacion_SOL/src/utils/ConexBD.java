@@ -10,7 +10,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class ConexBD {
 	// Datos de la conexion a la BD
-	static final String DB_URL = "jdbc:mysql://localhost:3306/bdconcursodetalentos";
+	static final String DB_URL = "jdbc:mysql://localhost:3306/bdfederacion";
 	static final String USER = "root";
 	static final String PASS = "";
 
@@ -62,14 +62,15 @@ public class ConexBD {
 		}
 		return conexion;
 	}
-
+	
 	public static void cerrarConexion() {
-		if (conexion != null) {
-			try {
+		try {
+			if (conexion != null && !conexion.isClosed()) {
 				conexion.close();
-			} catch (SQLException ex) {
-				System.out.println("Se ha producido una SQLException:" + ex.getMessage());
 			}
+		} catch (SQLException e) {
+			System.out.println("Se ha producido una SQLException: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

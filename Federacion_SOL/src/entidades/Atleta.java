@@ -22,7 +22,7 @@ public class Atleta extends Participante {
 	}
 
 	public Atleta(long id, int dorsal, char calle, long idAtleta, float altura, float peso, DatosPersona dp) {
-		super(idAtleta, dorsal, calle);
+		super(id, dorsal, calle);
 		this.idAtleta = idAtleta;
 		this.altura = altura;
 		this.peso = peso;
