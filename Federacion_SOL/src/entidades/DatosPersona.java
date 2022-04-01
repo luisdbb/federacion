@@ -1,19 +1,29 @@
 package entidades;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
-import utils.Utilidades;
+import utils.*;
 import validaciones.Validaciones;
 
-public class DatosPersona {
+public class DatosPersona implements Comparable<DatosPersona> {
 	private long id;
 	private String nombre;
 	private String telefono;
 	private LocalDate fechaNac;
 
-	private Documentacion nifnie; //Examen 2 Ejercicio 3.2
+	private Documentacion nifnie; // Examen 2 Ejercicio 3.2
 
 	public DatosPersona(long id, String nombre, String telefono, LocalDate fechaNac) {
 		super();
@@ -22,8 +32,8 @@ public class DatosPersona {
 		this.telefono = telefono;
 		this.fechaNac = fechaNac;
 	}
-	
-	//Examen 2 Ejercicio 3.2
+
+	// Examen 2 Ejercicio 3.2
 	public DatosPersona(long id, String nombre, String telefono, LocalDate fechaNac, Documentacion nifnie) {
 		super();
 		this.id = id;
@@ -131,6 +141,102 @@ public class DatosPersona {
 				System.out.println("ERROR: El documento introducido no es válido.");
 		} while (!valido);
 		ret = new DatosPersona(id, nombre, tfn, fecha, doc);
+		return ret;
+	}
+
+	/// Examen 9 Ejercicio 1-A
+	public String data() {
+		String ret = "";
+		ret += "" + this.getId() + "|" + this.getNombre() + "|" + this.getTelefono() + "|"
+				+ this.getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")) + "|"
+				+ this.getNifnie().mostrar();
+		return ret;
+	}
+
+	/// Examen 9 Ejercicio 1-C
+	public static void exportarAtletasAlfabetico() {
+		File f = new File("atletas_alfabetico.txt");
+		FileWriter fo = null;
+		/// Utilizamos una lista para tomar primeramente los datos desde la clase
+		/// Datos.java
+		List<DatosPersona> personas = new LinkedList<DatosPersona>();
+		for (DatosPersona dp : Datos.PERSONAS) {
+			personas.add(dp);
+		}
+		/// Se ordena la lista según el ComparadorAlfabetico
+		Collections.sort(personas, new ComparadorAlfabetico());
+		try {
+			fo = new FileWriter(f);
+			/// Se recorre cada elemento de la lista ya ordenada y se exporta hacia el
+			/// fichero de caracteres, una persona en cada línea y a través del método
+			/// DatosPersona.data
+			for (DatosPersona dp : personas) {
+				fo.write(dp.data() + "\n");
+				fo.flush();
+			}
+			fo.close();
+			System.out.println("Se han exportado correctamente los datos de las personas.");
+		} catch (FileNotFoundException e) {
+			System.out.println("Se ha producido una FileNotFoundException:" + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception:" + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	/// Examen 9 ejercicio 2-A
+	@Override
+	public int compareTo(DatosPersona o2) {
+		// si la fecha_nac de this es posterior a la de o2, entonces this es menor (en
+		// edad) que o2
+		if (this.getFechaNac().isAfter(o2.getFechaNac()))
+			return -1;
+		else
+		// si la fecha_nac de this es posterior a la de o2, entonces this es menor (en
+		// edad) que o2
+		if (this.getFechaNac().isBefore(o2.getFechaNac()))
+			return 1;
+		else {
+			// si la fecha_nac de this la misma de o2, entonces se desempata en funcion del
+			// campo Documentacion
+			return this.getNifnie().compareTo(o2.getNifnie());
+		}
+		/// Otra forma más sencilla sería esta:
+		// return this.getFechaNac().compareTo(o2.getFechaNac());
+	}
+
+	/// Examen 9 ejercicio 2-B
+	public static boolean insertarPersonas() {
+		boolean ret = false;
+		Connection conex = ConexBD.establecerConexion();
+		String consultaInsertStr1 = "insert into personas(id, nombre, telefono, fechanac, nifnie) values (?,?,?,?,?)";
+		try {
+			PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr1);
+
+			List<DatosPersona> personas = new LinkedList<>();
+			for (DatosPersona dp : Datos.PERSONAS) {
+				personas.add(dp);
+			}
+			Collections.sort(personas);
+			Iterator<DatosPersona> it = personas.iterator();
+			while (it.hasNext()) {
+				DatosPersona dp = (DatosPersona) it.next();
+				pstmt.setLong(1, dp.getId());
+				pstmt.setString(2, dp.getNombre());
+				pstmt.setString(3, dp.getTelefono());
+				java.sql.Date fechaSQL = java.sql.Date.valueOf(dp.getFechaNac());
+				pstmt.setDate(4, fechaSQL);
+				pstmt.setString(5, dp.getNifnie().mostrar());
+				int resultadoInsercion = pstmt.executeUpdate();
+				ret = (resultadoInsercion != 0);
+			}
+		} catch (SQLException e) {
+			System.out.println("Se ha producido una SQLException:" + e.getMessage());
+			e.printStackTrace();
+			ret = false;
+		}
+
 		return ret;
 	}
 

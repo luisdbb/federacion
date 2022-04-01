@@ -1,5 +1,8 @@
 package principal;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,11 +12,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Scanner;
 
+import entidades.Bronce;
 import entidades.DatosPersona;
 import entidades.Lugar;
+import entidades.Metal;
+import entidades.Oro;
+import entidades.Plata;
 import utils.ConexBD;
 import utils.Datos;
+import utils.Utilidades;
 
 public class PrincipalBD {
 
@@ -37,14 +47,14 @@ public class PrincipalBD {
 				String nombre = resultado.getString(2);
 				String ubicacion = resultado.getString(3);
 				boolean airelibre = resultado.getBoolean(4);
-				
-//				java.sql.Date fecha = resultado.getDate(4);
-//				java.sql.Time hora = resultado.getTime(4);
-//				LocalDate fechadate = fecha.toLocalDate();
-//				LocalTime horatime = hora.toLocalTime();
-//				java.time.LocalDateTime fechahora = LocalDateTime.of(fechadate, horatime);
-//				System.out.println("id=" + id + "\tptos:" + puntuacionMedia + "\tfecha:"
-//						+ fechahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")));
+
+				java.sql.Date fecha = resultado.getDate(4);
+				java.sql.Time hora = resultado.getTime(4);
+				java.time.LocalDate fechadate = fecha.toLocalDate();
+				java.time.LocalTime horatime = hora.toLocalTime();
+				java.time.LocalDateTime fechahora = LocalDateTime.of(fechadate, horatime);
+				System.out.println("id=" + id + "\tfecha:"
+						+ fechahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")));
 			}
 		} catch (SQLException e) {
 			System.out.println("Se ha producido una Excepcion:" + e.getMessage());
@@ -67,21 +77,20 @@ public class PrincipalBD {
 	}
 
 	public static void insertarAtletas() {
-		
+
 		Connection conex = ConexBD.establecerConexion();
-		String consultaInsertStr1 ="insert into datospersonas(id, nombre, telefono, fechanac, nifnie) values (?,?,?,?,?)";
-		String consultaInsertStr2="insert into particpantes(id, dorsal, calle) values (?,?,?)";
+		String consultaInsertStr1 = "insert into datospersonas(id, nombre, telefono, fechanac, nifnie) values (?,?,?,?,?)";
+		String consultaInsertStr2 = "insert into participantes(id, dorsal, calle) values (?,?,?)";
 		String consultaInsertStr3 = "insert into atletas(idatleta, altura, peso, idparticipante, idpersona) values (?,?,?,?,?,?)";
-		
-		
+
 		try {
-			
+
 			PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr1);
-			for ( DatosPersona dp: Datos.PERSONAS) {
+			for (DatosPersona dp : Datos.PERSONAS) {
 				pstmt.setLong(1, dp.getId());
 				pstmt.setString(2, dp.getNombre());
 				pstmt.setString(3, dp.getTelefono());
-				java.sql.Date fechaSQL = new java.sql.Date(0); //.getFechaNac();
+				java.sql.Date fechaSQL = new java.sql.Date(0); // .getFechaNac();
 				pstmt.setDate(4, fechaSQL);
 				pstmt.setString(5, "");
 				int resultadoInsercion = pstmt.executeUpdate();
@@ -93,13 +102,7 @@ public class PrincipalBD {
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	public static void insertarLugares() {
 		Connection conex = ConexBD.establecerConexion();
 		String consultaInsertStr = "insert into lugares(id, nombre, ubicacion, airelibre) values (?,?,?,?)";
@@ -119,5 +122,7 @@ public class PrincipalBD {
 		}
 
 	}
+
+	
 
 }

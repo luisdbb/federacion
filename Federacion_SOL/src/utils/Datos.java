@@ -13,7 +13,6 @@ import entidades.DatosPersona;
 import entidades.Equipo;
 import entidades.Lugar;
 import entidades.Manager;
-import entidades.Metal;
 import entidades.NIE;
 import entidades.NIF;
 import entidades.Oro;

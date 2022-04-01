@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -1195,6 +1196,79 @@ public class Principal4 {
 				System.out.println("Se ha producido una Exception" + e.getMessage());
 			}
 		}
+	}
+	
+	public static boolean exportarMedallas(ArrayList<Metal> medallas) {
+		boolean ret = false;
+		FileWriter fw = null;
+		File f = new File("medallas.txt");
+		Scanner in = new Scanner(System.in);
+		float purMin = 0.0F;
+		float purMax = 0.0F;
+		System.out.println("Dame pureza min:");
+		purMin = Utilidades.leerFloat();
+		System.out.println("Dame pureza min:");
+		purMax = Utilidades.leerFloat();
+		// validar que purMax > purMin y otras validaciones ...
+		System.out.println("¿Desea buscar entre todas las medallas (pulse NO para sólo las asignadas)?");
+		boolean todasmedallas = Utilidades.leerBoolean();
+		ArrayList<Oro> oros = new ArrayList<Oro>();
+		ArrayList<Plata> platas = new ArrayList<Plata>();
+		ArrayList<Bronce> bronces = new ArrayList<Bronce>();
+
+		for (Metal m : medallas) {
+			float purMetal = m.getPureza();
+			if (todasmedallas) {
+				if (purMetal >= purMin && purMetal <= purMax) {
+					if (m.getClass().equals(Oro.class))
+						oros.add((Oro) m);
+					else if (m.getClass().equals(Plata.class))
+						platas.add((Plata) m);
+
+					else if (m.getClass().equals(Bronce.class))
+						bronces.add((Bronce) m);
+				}
+			} else {
+				if (m.asignada) {
+					if (purMetal >= purMin && purMetal <= purMax) {
+						if (m.getClass().equals(Oro.class))
+							oros.add((Oro) m);
+						else if (m.getClass().equals(Plata.class))
+							platas.add((Plata) m);
+						else if (m.getClass().equals(Bronce.class))
+							bronces.add((Bronce) m);
+					}
+				}
+			}
+		}
+		try {
+			fw = new FileWriter(f);
+			fw.write("Lista de medallas con pureza >="+ purMin +" y <="+ purMax+"\n");
+			fw.write("-----------------------------\n");
+			fw.write("OROS:\n");
+			for(Oro o : oros)
+				fw.write("\t"+"idMedalla:"+o.getId()+" ,pureza="+o.getPureza()+" y fecha de compra"+ ((Metal)o).getFecha().format(DateTimeFormatter.ofPattern("dd/mm/YYYY"))+"\n");
+			fw.write("PLATAS:\n");
+			for(Plata p : platas)
+				fw.write("\t"+"idMedalla:"+p.getId()+" ,pureza="+p.getPureza()+" y fecha de compra"+ ((Metal)p).getFecha().format(DateTimeFormatter.ofPattern("dd/mm/YYYY"))+"\n");
+			fw.write("BRONCES:\n");
+			for(Bronce b : bronces)
+				fw.write("\t"+"idMedalla:"+b.getId()+" ,pureza="+b.getPureza()+" y fecha de compra"+ ((Metal)b).getFecha().format(DateTimeFormatter.ofPattern("dd/mm/YYYY"))+"\n");
+			fw.write("-----------------------------\n");
+			fw.flush();
+			if(fw!= null)
+				fw.close();
+			ret = true;
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception:" + e.getMessage());
+			e.printStackTrace();
+			ret = false;
+		}
+		finally {
+			
+		}
+
+		return ret;
 	}
 
 }
