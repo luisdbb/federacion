@@ -203,15 +203,15 @@ public class DatosPersona implements Comparable<DatosPersona> {
 			return this.getNifnie().compareTo(o2.getNifnie());
 		}
 		/// Otra forma más sencilla sería esta:
-		// return this.getFechaNac().compareTo(o2.getFechaNac());
+		//return this.getFechaNac().compareTo(o2.getFechaNac());
 	}
 
 	/// Examen 9 ejercicio 2-B
 	public static boolean insertarPersonas() {
 		boolean ret = false;
-		Connection conex = ConexBD.establecerConexion();
 		String consultaInsertStr1 = "insert into personas(id, nombre, telefono, fechanac, nifnie) values (?,?,?,?,?)";
 		try {
+			Connection conex = ConexBD.establecerConexion();
 			PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr1);
 
 			List<DatosPersona> personas = new LinkedList<>();

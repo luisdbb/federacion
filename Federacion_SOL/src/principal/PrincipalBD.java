@@ -14,7 +14,7 @@ import utils.*;
 public class PrincipalBD {
 
 	public static void main(String[] args) {
-		insertarAtletas();
+//		insertarAtletas();
 		System.out.println("INICIO");
 		Connection conex = null;
 		Statement consulta = null;
@@ -117,24 +117,24 @@ public class PrincipalBD {
 
 	}
 
-	public static void insertarLugares() {
-		Connection conex = ConexBD.establecerConexion();
-		String consultaInsertStr = "insert into lugares(id, nombre, ubicacion, airelibre) values (?,?,?,?)";
-		try {
-			PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr);
-			for (Lugar l : Lugar.values()) {
-				pstmt.setInt(1, l.getId());
-				pstmt.setString(2, l.getNombre());
-				pstmt.setString(3, l.getUbicacion());
-				pstmt.setBoolean(4, l.isAirelibre());
-				int resultadoInsercion = pstmt.executeUpdate();
-			}
-
-		} catch (SQLException e) {
-			System.out.println("Se ha producido una SQLException:" + e.getMessage());
-			e.printStackTrace();
-		}
-
-	}
+//	public static void insertarLugares() {
+//		Connection conex = ConexBD.establecerConexion();
+//		String consultaInsertStr = "insert into lugares(id, nombre, ubicacion, airelibre) values (?,?,?,?)";
+//		try {
+//			PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr);
+//			for (Lugar l : Lugar.values()) {
+//				pstmt.setInt(1, l.getId());
+//				pstmt.setString(2, l.getNombre());
+//				pstmt.setString(3, l.getUbicacion());
+//				pstmt.setBoolean(4, l.isAirelibre());
+//				int resultadoInsercion = pstmt.executeUpdate();
+//			}
+//
+//		} catch (SQLException e) {
+//			System.out.println("Se ha producido una SQLException:" + e.getMessage());
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 }
