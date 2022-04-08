@@ -1,11 +1,16 @@
 package entidades;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 import validaciones.Validaciones;
 
 //Examen 2 Ejercicio 3.1
-public class NIE extends Documentacion {
+public class NIE extends Documentacion implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	char letraInicial;
 	String numero;
 	char letraFinal;

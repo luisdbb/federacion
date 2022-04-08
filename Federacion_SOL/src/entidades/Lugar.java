@@ -82,18 +82,17 @@ public enum Lugar implements operacionesCRUD<Lugar> {
 			pstmt.setString(2, l.getUbicacion());
 			pstmt.setBoolean(3, l.isAirelibre());
 			int resultadoInsercion = pstmt.executeUpdate();
-			if(resultadoInsercion==1) {
-				String consultaSelect = "SELECT id FROM lugares WHERE (nombre=? AND ubicacion=? "
-						+ "AND airelibre=?)";
-				PreparedStatement pstmt2 = conex.prepareStatement(consultaInsertStr);
+			if (resultadoInsercion == 1) {
+				String consultaSelect = "SELECT id FROM lugares WHERE (nombre=? AND ubicacion=? " + "AND airelibre=?)";
+				PreparedStatement pstmt2 = conex.prepareStatement(consultaSelect);
 				pstmt2.setString(1, l.getNombre());
 				pstmt2.setString(2, l.getUbicacion());
-				pstmt2.setInt(3, (l.isAirelibre()?1:0));
-			
+				pstmt2.setInt(3, (l.isAirelibre() ? 1 : 0));
+
 				ResultSet result = pstmt2.executeQuery();
-				while(result.next()) {
+				while (result.next()) {
 					long id = result.getLong("id");
-					if(id!=-1)
+					if (id != -1)
 						ret = id;
 				}
 				result.close();
@@ -104,13 +103,38 @@ public enum Lugar implements operacionesCRUD<Lugar> {
 			System.out.println("Se ha producido una SQLException:" + e.getMessage());
 			e.printStackTrace();
 			return -1;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("Se ha producido una Exception:" + e.getMessage());
 			e.printStackTrace();
 			return -1;
 		}
-	
+
+		return ret;
+	}
+
+	///Examen 10 ejercicio 10
+	@Override
+	public Lugar buscarPorID(long id) {
+		Lugar ret = null;
+		Connection conex = ConexBD.establecerConexion();
+		String consultaInsertStr = "select * FROM lugares WHERE id=?";
+		try {
+			PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr);
+			pstmt.setLong(1, id);
+			ResultSet result = pstmt.executeQuery();
+			while (result.next()) {
+				long idBD = result.getLong("id");
+				for (Lugar l : Lugar.values())
+					if (l.getId() == idBD)
+						return l;
+			}
+		} catch (SQLException e) {
+			System.out.println("Se ha producido una SQLException:" + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception:" + e.getMessage());
+			e.printStackTrace();
+		}
 		return ret;
 	}
 

@@ -53,16 +53,6 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta> {
 		this.persona = Datos.buscarPersonaPorId(a.idAtleta);
 	}
 
-	@Override
-	public long getId() {
-		return idAtleta;
-	}
-
-	@Override
-	public void setId(long id) {
-		this.idAtleta = id;
-	}
-
 	public float getAltura() {
 		return altura;
 	}
@@ -83,6 +73,19 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta> {
 		return this.persona;
 	}
 
+	public void setPersona(DatosPersona persona) {
+		this.persona = persona;
+	}
+	
+	public long getIdAtleta() {
+		return idAtleta;
+	}
+
+	public void setIdAtleta(long idAtleta) {
+		this.idAtleta = idAtleta;
+	}
+
+
 	// Examen 5 Ejercicio 5
 	/***
 	 * Función que pregunta al usuario por cada uno de los campos para un nuevo
@@ -95,7 +98,6 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta> {
 		long id = -1;
 		float altura = 0.0F;
 		float peso = 0.0F;
-		int elecc = -1;
 		DatosPersona dp = null;
 		Scanner in;
 		boolean valido = false;
@@ -245,6 +247,40 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta> {
 			return -1;
 		}
 
+		return ret;
+	}
+	
+	///Examen 10 ejercicio 10
+	@Override
+	public Atleta buscarPorID(long id) {
+		Atleta ret = null;
+		Connection conex = ConexBD.establecerConexion();
+		String consultaInsertStr = "select * FROM atletas WHERE id=?";
+		try {
+			PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr);
+			pstmt.setLong(1, id);
+			ResultSet result = pstmt.executeQuery();
+			while (result.next()) {
+				long idBD = result.getLong("id");
+				long idPersona = result.getLong("idpersona");
+				long idEquipo = result.getLong("idequipo"); ////puede ser null
+				float altura = result.getFloat("altura");
+				float peso = result.getFloat("peso");
+				ret = new Atleta();
+				ret.setIdAtleta(idBD);
+				ret.setAltura(altura);
+				ret.setPeso(peso);
+				DatosPersona dp = Datos.buscarPersonaPorId(idPersona);
+				ret.setPersona(dp);
+				///TO-DO: Habrá que arreglar esta parte cuando se incluya la información del equipo
+			}
+		} catch (SQLException e) {
+			System.out.println("Se ha producido una SQLException:" + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception:" + e.getMessage());
+			e.printStackTrace();
+		}
 		return ret;
 	}
 

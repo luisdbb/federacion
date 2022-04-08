@@ -15,4 +15,6 @@ public interface operacionesCRUD<T> {
 	 */
 	public long insertarSinID(T elemento);
 	
+	public T buscarPorID(long id);
+	
 }

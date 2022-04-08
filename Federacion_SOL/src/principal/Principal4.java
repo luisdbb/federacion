@@ -917,7 +917,7 @@ public class Principal4 {
 						}
 					}
 					boolean individual = Boolean.valueOf(campos[4]);
-					Prueba p = new Prueba(idPrueba, nombrePrueba, fecha, lugar, individual);
+					Prueba p = new Prueba(idPrueba, nombrePrueba, fecha, lugar, individual, new Patrocinador());
 					/// Solo se muestran al usuario las pruebas individuales, que se van guardando
 					/// en el array individuales
 					if (p.isIndividual()) {
@@ -1084,7 +1084,7 @@ public class Principal4 {
 						}
 					}
 					boolean individual = Boolean.valueOf(campos[4]);
-					Prueba p = new Prueba(idPrueba, nombrePrueba, fecha, lugar, individual);
+					Prueba p = new Prueba(idPrueba, nombrePrueba, fecha, lugar, individual, new Patrocinador());
 					/// Solo se muestran al usuario las pruebas colectivas (no individuales), que se
 					/// van guardando
 					/// en el array colectivas

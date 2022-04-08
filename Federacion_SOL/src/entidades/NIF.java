@@ -1,10 +1,15 @@
 package entidades;
 
+import java.io.Serializable;
 import java.util.Scanner;
 import validaciones.Validaciones;
 
 //Examen 2 Ejercicio 3.1
-public class NIF extends Documentacion {
+public class NIF extends Documentacion implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String numero;
 	char letraFinal;
 
@@ -19,7 +24,7 @@ public class NIF extends Documentacion {
 
 	public NIF(String cadena) {
 		super();
-		this.numero = cadena.substring(0, cadena.length());
+		this.numero = cadena.substring(0, cadena.length()-1);
 		this.letraFinal = cadena.charAt(cadena.length() - 1);
 	}
 

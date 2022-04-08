@@ -176,6 +176,13 @@ public class Datos {
 			new DatosPersona(1013, "Carlos Garcia Perez", "650732808", LocalDate.parse("20/05/1982", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
 			new DatosPersona(1014, "Maria Ruiz Fernandez", "652732818", LocalDate.parse("21/02/1981", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
 			new DatosPersona(1015, "Emma del Rio Flores", "650732111", LocalDate.parse("02/01/1980", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
+			
+			///Datos para Responsables de patrocinadores
+			new DatosPersona(1111, "Rafael Décimo Foz", "65534015", LocalDate.parse("07/10/1976", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIE(UtilsDNI.generarNIEAleatorio())),
+			new DatosPersona(1112, "Bartolomé Blasco Fernandez", "600215880", LocalDate.parse("10/01/1989", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
+			new DatosPersona(1113, "Carla Perez Garcia", "660762608", LocalDate.parse("26/06/1982", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
+			new DatosPersona(1114, "Maria Asuncion Ruiz Gomez", "652720818", LocalDate.parse("21/02/1971", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
+			new DatosPersona(1115, "Manuel Florez del Rio", "650032011", LocalDate.parse("01/01/1970", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
 
 			//Datos de las personas Managers (id > 2000 Y id <= 3000)
 			new DatosPersona(2001, "Rosario Prado Blanco", "627943650", LocalDate.parse("18/09/1979", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
@@ -193,6 +200,7 @@ public class Datos {
 			new DatosPersona(2013, "Juana de la Riva Gutierrez", "629904871", LocalDate.parse("09/01/1989", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
 			new DatosPersona(2014, "Damian Ortiz Arenas", "681331773", LocalDate.parse("24/07/1987", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio())),
 			new DatosPersona(2015, "Cesar Gutierrez Fernandez", "690302861", LocalDate.parse("10/08/1995", DateTimeFormatter.ofPattern("dd/MM/yyyy")), new NIF(UtilsDNI.generaDNIAleatorio()))
+	
 	};
 
 	public static Manager[] MANAGERS = {
