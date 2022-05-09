@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import DAO.PatrocinadorDAO;
+import utils.ConexBD;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class Prueba {
+public class Prueba implements Comparable<Prueba> {
 	private long id;
 	private String nombre;
 	private LocalDate fecha; // solo fecha
@@ -308,18 +310,48 @@ public class Prueba {
 				valido = true;
 		} while (!valido);
 		lugar = Lugar.values()[idLugar];
-		////Examen 10 ejercicio 12
+		//// Examen 10 ejercicio 12
 		System.out.println("Introduzca los datos del patrocinador de la prueba");
-		System.out.println("Pulse S para introducir los datos de un nuevo patrocinador o N para elegir un patrocinador ya existente en la BD:");
+		System.out.println(
+				"Pulse S para introducir los datos de un nuevo patrocinador o N para elegir un patrocinador ya existente en la BD:");
 		boolean nuevoPatrocinador = Utilidades.leerBoolean();
 		Patrocinador patrocinador;
 		if (nuevoPatrocinador)
 			patrocinador = Patrocinador.nuevoPatrocinador();
-		else 
-			patrocinador = Patrocinador.seleccionarUnoYaExistente(); /// Examen 10 Ejercicio 12
-		
+		else {
+			PatrocinadorDAO patDAO = new PatrocinadorDAO(ConexBD.getCon());
+			patrocinador = patDAO.seleccionarUnoYaExistente(); /// Examen 10 Ejercicio 12
+			ConexBD.cerrarConexion();
+		}
 		ret = new Prueba(id, nombre, fecha, lugar, ind, patrocinador);
 		return ret;
+	}
+
+	/// EXAM11 EJERCICIO2-EVAL2
+	/**
+	 * la interfaz Comparable para la clase Prueba.java, de forma que se ordenen
+	 * según su fecha, de más reciente a más antigua, y desempatar en función de si
+	 * es individual (en cuyo caso se considera anterior a una de tipo colectiva) o
+	 * por equipos. Por último, si sigue habiendo empate, deshacerlo por el valor
+	 * del campo nombre en orden alfabético creciente.
+	 */
+	@Override
+	public int compareTo(Prueba o) {
+		int ret = this.getFecha().compareTo(o.getFecha());
+		if (ret == 0) {
+			//las 2 pruebas son en las misma fecha
+			if((this.isIndividual() && o.isIndividual() ) || (!this.isIndividual() && !o.isIndividual())) {
+				//las 2 pruebas son del mismo tipo (individual o por equipos ambas)
+				ret = this.getNombre().compareToIgnoreCase(o.getNombre());
+			}
+			else {
+				//una prueba es individual (anterior) y la otra por equipos
+				if(this.isIndividual()) ret = -1;
+				else ret = 1;
+			}
+		}
+		return ret;
+
 	}
 
 }

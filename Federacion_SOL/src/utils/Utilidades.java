@@ -10,6 +10,7 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import entidades.Tiempo;
 import validaciones.Validaciones;
 
 /**
@@ -185,7 +186,8 @@ public class Utilidades extends Validaciones {
 				ret = LocalTime.of(hora, minuto, segundo);
 				correcto = true;
 			} catch (Exception e) {
-				System.out.println("Hora introducida incorrecta. Primero ingrese la hora, luego el minuto y finalmente el segundo.");
+				System.out.println(
+						"Hora introducida incorrecta. Primero ingrese la hora, luego el minuto y finalmente el segundo.");
 				correcto = false;
 			}
 		} while (!correcto);
@@ -277,6 +279,52 @@ public class Utilidades extends Validaciones {
 	 */
 	public static Double formatearDecimales(Double numero, Integer numeroDecimales) {
 		return Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroDecimales);
+	}
+
+
+
+	public static int convertirAEntero(String aux) {
+		int ret = -1;
+		try {
+			ret = Integer.valueOf(aux);
+		} catch (Exception e) {
+			System.out.println("ERROR: Problema al tomar el valor del entero.");
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Funcion que redondea un Tiempo de forma que un valor >50 en las centésimas
+	 * incremente el valor de los segundos en 1 unidad (y luego siempre establecer a
+	 * 0 las centésimas).
+	 * 
+	 * @param t
+	 * @return
+	 */
+	public static Tiempo redondearCentesimas(Tiempo t) {
+		Tiempo ret = new Tiempo();
+		if (t.getCentesimas() > 50) {
+			ret.setCentesimas(0);
+			ret.setSegundos(t.getSegundos() + 1);
+			if (ret.getSegundos() == 60) {
+				ret.setSegundos(0);
+				ret.setMinutos(t.getMinutos() + 1);
+			} else
+				ret.setMinutos(t.getMinutos());
+			if (ret.getMinutos() == 60) {
+				ret.setMinutos(0);
+				ret.setHoras(t.getHoras() + 1);
+			} else
+				ret.setHoras(t.getHoras());
+		} else {
+			ret.setHoras(t.getHoras());
+			ret.setMinutos(t.getMinutos());
+			ret.setSegundos(t.getSegundos());
+			ret.setCentesimas(0);
+		}
+
+		return ret;
 	}
 
 }

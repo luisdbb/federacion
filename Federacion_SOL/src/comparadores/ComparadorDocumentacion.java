@@ -1,6 +1,8 @@
-package entidades;
+package comparadores;
 
 import java.util.Comparator;
+
+import entidades.Documentacion;
 
 public class ComparadorDocumentacion implements Comparator<Documentacion> {
 	@Override

@@ -9,6 +9,7 @@ import com.aeat.valida.Validador;
 
 import entidades.NIE;
 import entidades.NIF;
+import entidades.Tiempo;
 
 //Examen 5 Ejercicio 3
 public class Validaciones {
@@ -239,4 +240,63 @@ public class Validaciones {
 		else
 			return true;
 	}
+
+	public static boolean validarHoras(int h) {
+		return (h >= 0);
+	}
+
+	public static boolean validarMinutos(int m) {
+		return (m >= 0 && m <= 59);
+	}
+
+	public static boolean validarSegundos(int s) {
+		return (s >= 0 && s <= 59);
+	}
+
+	public static boolean validarCentesimas(int c) {
+		return (c >= 0 && c <= 99);
+	}
+
+	/***
+	 * funcion que valida si un Tiempo es mayor que 00h 00m 00,00s
+	 * 
+	 * @param t
+	 * @return
+	 */
+	public static boolean validarTiempo(Tiempo t) {
+		boolean ret = false;
+		if(!validarHoras(t.getHoras()))
+			return false;
+		if(!validarMinutos(t.getMinutos()))
+			return false;
+		if(!validarSegundos(t.getSegundos()))
+			return false;
+		if(!validarCentesimas(t.getCentesimas()))
+			return false;
+		
+		if (t.getHoras() == 0)
+			if (t.getMinutos() == 0)
+				if (t.getSegundos() == 0)
+					if (t.getCentesimas() == 0)
+						ret = false;
+
+		return true;
+	}
+
+	public static boolean validarMotivoPenalizacion(String otros) {
+		return (!otros.equals("") && otros.length() <= 500);
+	}
+
+	public static boolean validarDorsal(int dorsal) {
+		return (dorsal >= 1 && dorsal <= 150);
+	}
+
+	public static boolean validarCalle(char calle) {
+		try {
+			return Character.isLetter(calle);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 }

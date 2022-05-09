@@ -6,7 +6,7 @@ import java.util.Scanner;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class Plata extends Metal{
+public class Plata extends Metal {
 	private long id;
 	private float pureza; //% pureza
 	

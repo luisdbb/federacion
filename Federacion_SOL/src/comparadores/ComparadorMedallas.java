@@ -1,8 +1,10 @@
-package entidades;
+package comparadores;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
+
+import entidades.Metal;
 
 import java.util.Iterator;
 
