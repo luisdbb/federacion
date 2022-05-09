@@ -13,6 +13,11 @@ import java.awt.Font;
 public class PanelInsercionTiempo extends JPanel {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6573019921331671704L;
+
+	/**
 	 * Create the panel.
 	 */
 	public PanelInsercionTiempo() {

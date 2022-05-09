@@ -2,6 +2,7 @@ package validaciones;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -173,7 +174,7 @@ public class Validaciones {
 	}
 
 	public static boolean validarNombreEquipo(String nombre) {
-		return false; // TO-DO
+		return true; // TODO
 	}
 
 	/// Examen 10 ejercicio 2
@@ -265,15 +266,15 @@ public class Validaciones {
 	 */
 	public static boolean validarTiempo(Tiempo t) {
 		boolean ret = false;
-		if(!validarHoras(t.getHoras()))
+		if (!validarHoras(t.getHoras()))
 			return false;
-		if(!validarMinutos(t.getMinutos()))
+		if (!validarMinutos(t.getMinutos()))
 			return false;
-		if(!validarSegundos(t.getSegundos()))
+		if (!validarSegundos(t.getSegundos()))
 			return false;
-		if(!validarCentesimas(t.getCentesimas()))
+		if (!validarCentesimas(t.getCentesimas()))
 			return false;
-		
+
 		if (t.getHoras() == 0)
 			if (t.getMinutos() == 0)
 				if (t.getSegundos() == 0)
@@ -297,6 +298,24 @@ public class Validaciones {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	public static boolean validarNombrePrueba(String nombre) {
+		Pattern patron = Pattern.compile("[ A-Za-zñÑáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ0123456789-]{5,150}");
+		Matcher comprobacion = patron.matcher(nombre);
+		return comprobacion.matches();
+	}
+
+	/***
+	 * Valida que la fecha que se pasa como argumento sea posterior al dia actual + 1 mes
+	 * @param fecha
+	 * @return true si la fecha es posterior a hoy +1 mes o false en caso contrario
+	 */
+	public static boolean validarFechaNuevaPrueba(Date fecha) {
+		LocalDate hoyMas1MesLD = LocalDate.now().plusMonths(1);
+		java.util.Date hoyMas1Mes = new Date(hoyMas1MesLD.getYear() - 1900, hoyMas1MesLD.getMonthValue() - 1, hoyMas1MesLD.getDayOfMonth());
+		return fecha.after(hoyMas1Mes);
+		
 	}
 
 }

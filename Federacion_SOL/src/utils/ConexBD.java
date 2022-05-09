@@ -10,20 +10,20 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class ConexBD {
 	// Datos de la conexion a la BD
-	static final String DB_URL = "jdbc:mysql://localhost:3306/bdfederacion";
-	static final String USER = "root";
-	static final String PASS = "";
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/bdfederacion";
+	private static final String USER = "root";
+	private static final String PASS = "";
 
-	static Connection conexion = null;
-	Statement stmt = null;
-	PreparedStatement pstmt = null;
+	private static Connection conexion = null;
 
 	@SuppressWarnings("finally")
 	public static Connection establecerConexion() {
 		try {
-			System.out.println("Conectando a la Base de Datos...");
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conexion = DriverManager.getConnection(DB_URL, USER, PASS);
+			if (conexion == null || conexion.isClosed()) {
+				System.out.println("Conectando a la Base de Datos...");
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				conexion = DriverManager.getConnection(DB_URL, USER, PASS);
+			}
 		} catch (SQLException ex) {
 			System.out.println("Se ha producido una SQLException:" + ex.getMessage());
 		} catch (ClassNotFoundException ex) {
@@ -35,7 +35,7 @@ public class ConexBD {
 
 	public static Connection getCon() {
 		try {
-			if (conexion == null) {
+			if (conexion == null || conexion.isClosed()) {
 				Properties properties = new Properties();
 				MysqlDataSource m = new MysqlDataSource();
 				FileInputStream fis;
@@ -62,7 +62,7 @@ public class ConexBD {
 		}
 		return conexion;
 	}
-	
+
 	public static void cerrarConexion() {
 		try {
 			if (conexion != null && !conexion.isClosed()) {

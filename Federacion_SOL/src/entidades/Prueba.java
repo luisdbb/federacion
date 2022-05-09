@@ -23,6 +23,9 @@ public class Prueba implements Comparable<Prueba> {
 	/// Examen 10 Ejercicio 3
 	private Patrocinador patrocinador;
 
+	public Prueba() {
+	}
+
 	/// Examen 10 Ejercicio 3
 	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Patrocinador p) {
 		this.id = id;
@@ -339,15 +342,16 @@ public class Prueba implements Comparable<Prueba> {
 	public int compareTo(Prueba o) {
 		int ret = this.getFecha().compareTo(o.getFecha());
 		if (ret == 0) {
-			//las 2 pruebas son en las misma fecha
-			if((this.isIndividual() && o.isIndividual() ) || (!this.isIndividual() && !o.isIndividual())) {
-				//las 2 pruebas son del mismo tipo (individual o por equipos ambas)
+			// las 2 pruebas son en las misma fecha
+			if ((this.isIndividual() && o.isIndividual()) || (!this.isIndividual() && !o.isIndividual())) {
+				// las 2 pruebas son del mismo tipo (individual o por equipos ambas)
 				ret = this.getNombre().compareToIgnoreCase(o.getNombre());
-			}
-			else {
-				//una prueba es individual (anterior) y la otra por equipos
-				if(this.isIndividual()) ret = -1;
-				else ret = 1;
+			} else {
+				// una prueba es individual (anterior) y la otra por equipos
+				if (this.isIndividual())
+					ret = -1;
+				else
+					ret = 1;
 			}
 		}
 		return ret;
