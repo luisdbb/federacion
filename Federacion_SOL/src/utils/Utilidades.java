@@ -327,5 +327,10 @@ public class Utilidades extends Validaciones {
 		return ret;
 	}
 
+	public static String mostrarDouble1Decimal(double valor) {
+		DecimalFormat df = new DecimalFormat("#.#");
+		return df.format(valor);
+	}
+
 
 }

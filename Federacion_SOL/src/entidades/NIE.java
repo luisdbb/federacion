@@ -6,7 +6,7 @@ import java.util.Scanner;
 import validaciones.Validaciones;
 
 //Examen 2 Ejercicio 3.1
-public class NIE extends Documentacion implements Serializable{
+public class NIE extends Documentacion implements Serializable {
 	/**
 	 * 
 	 */
@@ -27,9 +27,11 @@ public class NIE extends Documentacion implements Serializable{
 
 	public NIE(String cadena) {
 		super();
-		this.letraInicial = cadena.charAt(0);
-		this.numero = cadena.substring(1, cadena.length());
-		this.letraFinal = cadena.charAt(cadena.length() - 1);
+		if (!cadena.isEmpty()) {
+			this.letraInicial = cadena.charAt(0);
+			this.numero = cadena.substring(1, cadena.length());
+			this.letraFinal = cadena.charAt(cadena.length() - 1);
+		}
 	}
 
 	public char getLetraInicial() {

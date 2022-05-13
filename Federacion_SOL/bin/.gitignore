@@ -1,6 +1,8 @@
-/gui/
-/entidades/
 /DAO/
+/comparadores/
+/entidades/
+/gui/
+/principal/
+/resources/
 /utils/
 /validaciones/
-/resources/

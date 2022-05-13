@@ -248,7 +248,7 @@ public class Prueba implements Comparable<Prueba> {
 		ret += "" + id + "." + nombre + " (" + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " en "
 				+ lugar.getNombre() + ") de tipo " + (this.isIndividual() ? "individual" : "colectiva") +
 				// Examen 10 Ejercicio 3, parte A
-				"patrocinada por: " + this.patrocinador.getNombre() + "\n";
+				" patrocinada por: " + this.patrocinador.getNombre() + "\n";
 		if (this.hayEquipoArbitral()) {
 			ret += this.nombresEquipoArbitral();
 		}

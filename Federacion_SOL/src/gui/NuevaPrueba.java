@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -21,17 +20,14 @@ import DAO.PatrocinadorDAO;
 import DAO.PruebaDAO;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 
 import entidades.Lugar;
 import entidades.Patrocinador;
 import entidades.Prueba;
 import utils.ConexBD;
-import utils.Utilidades;
 import validaciones.Validaciones;
 
 import java.awt.event.ActionListener;
@@ -234,8 +230,8 @@ public class NuevaPrueba extends JFrame {
 					titulo = "Nueva Prueba insertada en la BD";
 					msj = "Se ha insertado correctamente la nueva prueba:\n" + nueva.toString();
 					JOptionPane.showMessageDialog(null, msj, titulo, JOptionPane.INFORMATION_MESSAGE);
-					///Aqui se redirigiría al usuario hacia la pantalla principal
-					///TODO
+					/// Aqui se redirigiría al usuario hacia la pantalla principal
+					/// TODO
 				}
 			}
 		});
@@ -243,6 +239,18 @@ public class NuevaPrueba extends JFrame {
 		contentPane.add(buttonAceptar);
 
 		JButton buttonCancelar = new JButton("Cancelar");
+		buttonCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				String titulo = "Cerrar ventana";
+				String msj = "¿Realmente desea cerrar la ventana?";
+				int opcion = JOptionPane.showConfirmDialog(null, msj, titulo, JOptionPane.OK_CANCEL_OPTION);
+				if (opcion == JOptionPane.YES_OPTION) {
+					/// Aqui se redirigiría al usuario hacia la pantalla principal o se saldria
+					System.exit(0); /// SALIR directamente
+				}
+			}
+		});
 		buttonCancelar.setBounds(298, 227, 89, 23);
 		contentPane.add(buttonCancelar);
 	}

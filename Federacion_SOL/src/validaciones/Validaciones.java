@@ -318,4 +318,9 @@ public class Validaciones {
 		
 	}
 
+	public static boolean validarFechaNuevoAtleta(Date fecha) {
+		Date min = new Date(1960-1900, 1, 1);
+		return fecha.after(min);
+	}
+
 }

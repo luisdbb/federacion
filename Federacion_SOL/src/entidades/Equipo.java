@@ -83,13 +83,15 @@ public class Equipo extends Participante {
 	@Override
 	public String toString() {
 		String ret = "";
-		ret += "EQ" + idEquipo + " ("+nombre+") de " + manager.getPersona().getNombre() + " (" + manager.getDireccion() + ") "
-				+ atletas.length + " componentes en el equipo:\n";
-		for (Atleta a : atletas) {
-			ret += a.getId() + ". " + a.getPersona().getNombre() + "("
-					+ a.getPersona().getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ") "
-					+ " Datos físicos:\t" + a.getPeso() + "Kgs.\t" + a.getAltura() + "m.\n";
-		}
+		ret += "" + idEquipo + ". (" + nombre + ") de " + manager.getPersona().getNombre() + " ("
+				+ manager.getDireccion() + ") " + (atletas != null ? atletas.length : 0)
+				+ " componentes en el equipo:\n";
+		if (atletas != null)
+			for (Atleta a : atletas) {
+				ret += a.getId() + ". " + a.getPersona().getNombre() + "("
+						+ a.getPersona().getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ") "
+						+ " Datos físicos:\t" + a.getPeso() + "Kgs.\t" + a.getAltura() + "m.\n";
+			}
 		ret += "Valido durante el " + anioinscripcion;
 		return ret;
 	}
@@ -97,7 +99,7 @@ public class Equipo extends Participante {
 	/*
 	 * Equipo tiene 1 Mánager obligatoriamente y de 3 a 5 Atletas
 	 */
-	///Examen 8 Ejercicio 1 parte A
+	/// Examen 8 Ejercicio 1 parte A
 	public static Equipo nuevoEquipo() {
 		Equipo ret = new Equipo();
 		boolean valido = false;
@@ -121,17 +123,16 @@ public class Equipo extends Participante {
 		boolean resp = true;
 		HashSet<Atleta> atletas = new HashSet<Atleta>();
 		System.out.println("Introduzca los datos de los atletas del equipo (entre 3 y 5)");
-		for(int i=1; resp; i++) {
-			System.out.println("Introduzca datos del Atleta "+i+":");
+		for (int i = 1; resp; i++) {
+			System.out.println("Introduzca datos del Atleta " + i + ":");
 			Atleta a = Atleta.nuevoAtleta();
 			atletas.add(a);
-			if(atletas.size()>=3) {
+			if (atletas.size() >= 3) {
 				System.out.println("Ya tendría un equipo válido.");
-				if(atletas.size()<5) {
+				if (atletas.size() < 5) {
 					System.out.println("¿Desea introducir otro atleta al equipo?");
-					resp= Utilidades.leerBoolean();
-				}
-				else
+					resp = Utilidades.leerBoolean();
+				} else
 					System.out.println("Ya ha completado el equipo. No puede añadir más atletas.");
 				resp = false;
 			}
