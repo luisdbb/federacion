@@ -35,6 +35,10 @@ public class Bronce extends Metal {
 		this.fecha = fecha;
 	}
 
+	public Bronce() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -53,7 +57,7 @@ public class Bronce extends Metal {
 
 	@Override
 	public String toString() {
-		return "B" + id + "(" + pureza + "%) de fecha:" + this.getFecha() + " ¿asignado?=" + this.isAsignada();
+		return "" + id + ".(" + pureza + "%) de fecha:" + this.getFecha() + " ¿asignado?=" + this.isAsignada();
 	}
 
 	//Examen 1 Ejercicio 5, parte B

@@ -1,6 +1,7 @@
 package entidades;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Resultado {
 	private long id;
@@ -22,6 +23,12 @@ public class Resultado {
 		this.oro = oro;
 		this.plata = plata;
 		this.bronce = bronce;
+	}
+
+	public Resultado() {
+		oro = new Oro();
+		plata = new Plata();
+		bronce = new Bronce();
 	}
 
 	public long getId() {
@@ -60,7 +67,7 @@ public class Resultado {
 		return definitivo;
 	}
 
-	private void setDefinitivo(boolean definitivo) {
+	public void setDefinitivo(boolean definitivo) {
 		this.definitivo = definitivo;
 	}
 
@@ -68,7 +75,7 @@ public class Resultado {
 		return fechahora;
 	}
 
-	private void setFechahora(LocalDateTime fechahora) {
+	public void setFechahora(LocalDateTime fechahora) {
 		this.fechahora = fechahora;
 	}
 
@@ -112,6 +119,16 @@ public class Resultado {
 		this.podio = podioobtenido;
 		this.setDefinitivo(true);
 		this.setFechahora(fechahora);
+	}
+
+	/**
+	 * Funcion que devuelve una cadena de caracteres con el momento de cierre del
+	 * resultado en la forma hh:mm:ss del dia dd/MM/yyyy
+	 * 
+	 * @return
+	 */
+	public String mostrarFechaHoraCierre() {
+		return this.getFechahora().format(DateTimeFormatter.ofPattern("hh:mm:ss del dia dd/MM/yyyy"));
 	}
 
 }

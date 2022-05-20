@@ -7,13 +7,11 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collection;
 
-import entidades.Atleta;
-import entidades.DatosPersona;
 import entidades.Lugar;
 import entidades.Patrocinador;
 import entidades.Prueba;
+import entidades.Resultado;
 import utils.ConexBD;
-import utils.Datos;
 
 public class PruebaDAO implements operacionesCRUD<Prueba> {
 	Connection conex;
@@ -46,11 +44,12 @@ public class PruebaDAO implements operacionesCRUD<Prueba> {
 			pstmt.setLong(5, p.getPatrocinador().getId());
 			int resultadoInsercion = pstmt.executeUpdate();
 			if (resultadoInsercion == 1) {
-				String consultaSelect = "SELECT id FROM pruebas WHERE (nombre=? AND idlugar=? " + "AND individual=? AND idpatrocinador=?)";
+				String consultaSelect = "SELECT id FROM pruebas WHERE (nombre=? AND idlugar=? "
+						+ "AND individual=? AND idpatrocinador=?)";
 				PreparedStatement pstmt2 = conex.prepareStatement(consultaSelect);
 				pstmt2.setString(1, p.getNombre());
 				pstmt2.setLong(2, p.getLugar().getId());
-				pstmt2.setInt(3, (p.isIndividual()? 1 : 0));
+				pstmt2.setInt(3, (p.isIndividual() ? 1 : 0));
 				pstmt2.setLong(4, p.getPatrocinador().getId());
 				ResultSet result = pstmt2.executeQuery();
 				while (result.next()) {
@@ -90,22 +89,29 @@ public class PruebaDAO implements operacionesCRUD<Prueba> {
 				String nombre = result.getString("nombre");
 				java.sql.Date fecha = result.getDate("fecha");
 				long idPatrocinador = result.getLong("idpatrocinador");
-				long idResultado = result.getLong("idresultado"); //// puede ser null
 				boolean individual = result.getBoolean("individual");
 				long idLugar = result.getLong("idlugar");
-				LugarDAO lDAO = new LugarDAO(this.conex);
-				Lugar lugar = lDAO.buscarPorID(idLugar);
+				Long idResultado = result.getLong("idresultado");
+
 				ret = new Prueba();
 				ret.setId(idBD);
 				ret.setNombre(nombre);
 				LocalDate fechaLD = fecha.toLocalDate();
 				ret.setFecha(fechaLD);
-				ret.setLugar(lugar);
-				ret.setIndividual(individual);
 				PatrocinadorDAO pDAO = new PatrocinadorDAO(this.conex);
 				Patrocinador patroc = pDAO.buscarPorID(idPatrocinador);
-				ret.setPatrocinador(patroc);
-				//FAlta el Resultado
+				if (patroc != null)
+					ret.setPatrocinador(patroc);
+				ret.setIndividual(individual);
+				LugarDAO lDAO = new LugarDAO(this.conex);
+				Lugar lugar = lDAO.buscarPorID(idLugar);
+				ret.setLugar(lugar);
+				ResultadoDAO resDAO = new ResultadoDAO(this.conex);
+				Resultado resultado = resDAO.buscarPorID(idResultado);
+				if (resultado != null) {
+					ret.setResultado(resultado);
+				}
+
 			}
 			if (conex != null)
 				conex.close();
@@ -126,8 +132,28 @@ public class PruebaDAO implements operacionesCRUD<Prueba> {
 	}
 
 	@Override
-	public boolean modificar(Prueba elemento) {
-		// TODO Auto-generated method stub
+	public boolean modificar(Prueba p) {
+		String consultaInsertStr = "update pruebas SET nombre=?, fecha=?, idlugar=?, individual=?, idpatrocinador=? WHERE id=?";
+		try {
+			if (this.conex == null || this.conex.isClosed())
+				conex = ConexBD.establecerConexion();
+			PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr);
+			pstmt.setString(1, p.getNombre());
+			java.sql.Date fechaSQL = java.sql.Date.valueOf(p.getFecha());
+			pstmt.setDate(2, fechaSQL);
+			pstmt.setLong(3, p.getLugar().getId());
+			pstmt.setBoolean(4, p.isIndividual());
+			pstmt.setLong(5, p.getPatrocinador().getId());
+			pstmt.setLong(5, p.getId());
+			int resultadomodificacion = pstmt.executeUpdate();
+			if (resultadomodificacion == 1)
+				return true;
+			else
+				return false;
+		} catch (Exception exc) {
+			System.out.println("Se ha producido una SQLException:" + exc.getMessage());
+			exc.printStackTrace();
+		}
 		return false;
 	}
 

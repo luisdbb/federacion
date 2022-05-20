@@ -34,6 +34,10 @@ public class Oro extends Metal {
 		this.fecha = fecha;
 	}
 
+	public Oro() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -52,7 +56,7 @@ public class Oro extends Metal {
 
 	@Override
 	public String toString() {
-		return "O" + id + "(" + pureza + "%) de fecha:" + this.getFecha() + " ¿asignado?=" + this.isAsignada();
+		return "" + id + ".(" + pureza + "%) de fecha:" + this.getFecha() + " ¿asignado?=" + this.isAsignada();
 	}
 
 	//Examen 1 Ejercicio 5, parte B

@@ -31,6 +31,9 @@ public class DatosPersona implements Comparable<DatosPersona>, Serializable {
 
 	private Documentacion nifnie; // Examen 2 Ejercicio 3.2
 
+	public DatosPersona() {
+
+	}
 	public DatosPersona(long id, String nombre, String telefono, LocalDate fechaNac) {
 		super();
 		this.id = id;
@@ -48,6 +51,8 @@ public class DatosPersona implements Comparable<DatosPersona>, Serializable {
 		this.fechaNac = fechaNac;
 		this.nifnie = nifnie;
 	}
+
+
 
 	public long getId() {
 		return id;

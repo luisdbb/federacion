@@ -8,17 +8,17 @@ import validaciones.Validaciones;
 
 public class Plata extends Metal {
 	private long id;
-	private float pureza; //% pureza
-	
-	//Examen 1 Ejercicio 5, parte B
+	private float pureza; // % pureza
+
+	// Examen 1 Ejercicio 5, parte B
 	static private float maxPureza;
-	static private long idmaxpureza; 
-	
+	static private long idmaxpureza;
+
 	public Plata(long id, float pureza) {
 		super();
 		this.id = id;
 		this.pureza = pureza;
-		if(pureza > maxPureza) { 
+		if (pureza > maxPureza) {
 			maxPureza = pureza;
 			idmaxpureza = id;
 		}
@@ -28,11 +28,15 @@ public class Plata extends Metal {
 		super();
 		this.id = id;
 		this.pureza = pureza;
-		if(pureza > maxPureza) { 
+		if (pureza > maxPureza) {
 			maxPureza = pureza;
 			idmaxpureza = id;
 		}
 		this.fecha = fecha;
+	}
+
+	public Plata() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getId() {
@@ -53,10 +57,10 @@ public class Plata extends Metal {
 
 	@Override
 	public String toString() {
-		return "P" + id + "(" + pureza + "%) de fecha:"+ this.getFecha()+" ¿asignado?="+this.isAsignada();
+		return "" + id + ".(" + pureza + "%) de fecha:" + this.getFecha() + " ¿asignado?=" + this.isAsignada();
 	}
 
-	//Examen 1 Ejercicio 5, parte B
+	// Examen 1 Ejercicio 5, parte B
 	@Override
 	public float maximaPurezaAlcanzada() {
 		return Plata.maxPureza;
@@ -73,7 +77,7 @@ public class Plata extends Metal {
 	public static long getIdMaxPureza() {
 		return idmaxpureza;
 	}
-	
+
 	public static Plata nuevoPlata() {
 		Plata ret = null;
 		Scanner in = new Scanner(System.in);

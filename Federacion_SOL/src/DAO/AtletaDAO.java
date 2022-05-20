@@ -10,6 +10,7 @@ import java.util.List;
 
 import entidades.Atleta;
 import entidades.DatosPersona;
+import entidades.Equipo;
 import utils.ConexBD;
 import utils.Datos;
 
@@ -191,12 +192,19 @@ public class AtletaDAO implements operacionesCRUD<Atleta> {
 				float peso = result.getFloat("peso");
 				atleta = new Atleta();
 				atleta.setIdAtleta(idBD);
+				if (idEquipo > 0) {
+					EquipoDAO equipoDAO = new EquipoDAO(this.conex);
+					Equipo equipo = equipoDAO.buscarPorID(idEquipo);
+					if(equipo!=null) {
+						atleta.setIdEquipo(equipo.getId());
+					}
+				}
 				atleta.setAltura(altura);
 				atleta.setPeso(peso);
-				DatosPersona dp = Datos.buscarPersonaPorId(idPersona);
-				atleta.setPersona(dp);
-				/// TODO: Habrá que arreglar esta parte cuando se incluya la información del
-				/// equipo
+				PersonaDAO personaDAO = new PersonaDAO(this.conex);
+				DatosPersona dp = personaDAO.buscarPorID(idPersona);
+				if(dp!=null)
+					atleta.setPersona(dp);
 				todos.add(atleta);
 			}
 			if (conex != null)

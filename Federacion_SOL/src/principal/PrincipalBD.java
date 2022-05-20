@@ -8,12 +8,28 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import DAO.MetalDAO;
 import entidades.*;
 import utils.*;
 
 public class PrincipalBD {
 
 	public static void main(String[] args) {
+		MetalDAO mDAO = new MetalDAO(ConexBD.getCon());
+		for(Oro o: Datos.OROS) {
+			mDAO.insertarSinID(o);
+		}
+		for(Plata p: Datos.PLATAS) {
+			mDAO.insertarSinID(p);
+		}
+		for(Bronce b: Datos.BRONCES) {
+			mDAO.insertarSinID(b);
+		}
+		
+		
+		
+		
+		
 //		insertarAtletas();
 		System.out.println("INICIO");
 		Connection conex = null;
